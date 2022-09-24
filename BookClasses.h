@@ -1,6 +1,7 @@
 #pragma once
 #include "Header.h" 
-using namespace datastruct;
+#include "MapStruct.h"
+
 namespace books{
 	class Book {
 	public:
@@ -13,8 +14,8 @@ namespace books{
 	};
 	class Character {
 	public:
-		NodeList<std::string> list_of_names = NodeList<std::string>();
-		NodeList<Map<std::string, int>> list_of_books = NodeList<Map<std::string, int>>();
+		linkedl::LinkedList<std::string> list_of_names = linkedl::LinkedList<std::string>();
+		linkedl:: LinkedList<Map<std::string, int>> list_of_books = linkedl::LinkedList<Map<std::string, int>>();
 
 	};
 };
