@@ -1,6 +1,8 @@
 #pragma once
+#include"MapStruct.h"
 #include <String>
-namespace datastruct {
+namespace linkeld {
+	template <typename T> class CircularNodeList;
 	template <typename T> class Node {
 		Node<T>* next;
 		Node<T>* prev;
@@ -13,16 +15,16 @@ namespace datastruct {
 	public:
 		T info;
 	};
-	template <typename T> class NodeList {
-
+	template <typename T> class LinkedList {
+		friend class CircularNodeList;
 		Node<T>* head;
 		Node<T>* tail;
 	public:
-		NodeList() {
+		LinkedList() {
 			this->head = nullptr;
 			this->tail = nullptr;
 		}
-		~NodeList() {
+		~LinkedList() {
 			//....
 		}
 
@@ -41,7 +43,7 @@ namespace datastruct {
 
 
 
-	template <typename T> class Stack :NodeList {
+	template <typename T> class Stack :LinkedList {
 	public:
 		Node<T> pop_end() {
 			Node<T> temp = tail;
@@ -52,7 +54,7 @@ namespace datastruct {
 		
 	};
 
-	template <typename T> class Queue :NodeList {
+	template <typename T> class Queue :LinkedList {
 	public:
 		Node<T> pop_front() {
 			Node<T> temp = head;
@@ -76,58 +78,20 @@ namespace datastruct {
 			}
 		}
 	};
-
-
-	template <typename A, typename B>class Map {
+	
+	template <typename T> class CircularLinkedList : LinkedList {
 	public:
-		class KeyVal {
-			A key;
-			B val;
-		};
-		KeyVal* tail = nullptr;
-		KeyVal* head = nullptr;
-
-		inline void addtomap(A key, B val)
-		{
-			KeyVal* node = new KeyVal(key, val);
+		void insert_elem(Node<T> node) {
 			if (head == nullptr && tail == nullptr) {
-				tail = node;
 				head = node;
+				tail = node;
 			}
 			else {
-				tail->next = node;
-				tail = node;
-			}
-		}
-		
-		inline B get_val(A key)
-		{
-			KeyVal* temp = head;
-			while (true) {
-				if (temp->key == key)
-					return temp->val;
-				if (temp->next == nullptr) {
-					std::cout << "Error";
-					return 0;
-				}
-				temp = temp->next;
-			}
-		}
-		
-		inline A get_key(B val)
-		{
-			KeyVal* temp = head;
-			while (true) {
-				if (temp->val == val)
-					return temp->key;
-				if (temp->next == nullptr) {
-					std::cout << "Error";
-					return 0;
-				}
-				temp = temp->next;
+				head->prev = node;
+				head = node;
+				tail->head;
 			}
 		}
 	};
-	
-	
+
 }
