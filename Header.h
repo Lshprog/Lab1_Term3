@@ -4,12 +4,14 @@ namespace datastruct {
 	template <typename T> class Node {
 		Node<T>* next;
 		Node<T>* prev;
-		T info;
+		
 		Node(T info) {
 			this->info = info;
 			next = nullptr;
 			prev = nullptr;
 		}
+	public:
+		T info;
 	};
 	template <typename T> class NodeList {
 
@@ -37,37 +39,47 @@ namespace datastruct {
 
 	};
 
-	
-	
-	template <typename T> class ArrayList {
-
-	};
-
-	template <typename T> class VectorList {
-
-	};
 
 
-
-
-	template <typename T> class List {
-
-	};
-
-	template <typename T> class Stack :NodeList, ArrayList, VectorList {
+	template <typename T> class Stack :NodeList {
+	public:
+		Node<T> pop_end() {
+			Node<T> temp = tail;
+			tail = (tail->prev);
+			tail->next = nullptr;
+			return temp;
+		}
 		
 	};
 
 	template <typename T> class Queue :NodeList {
+	public:
+		Node<T> pop_front() {
+			Node<T> temp = head;
+			head = (head->next);
+			head->prev = nullptr;
+			return temp;
+		}
 
 	};
 
-	template <typename T> class DeQueue :NodeList {
-
+	template <typename T> class DeQueue :Stack, Queue {
+	public:
+		void add_beg(Node<T> node) {
+			if (head == nullptr && tail == nullptr) {
+				head = node;
+				tail = node;
+			}
+			else {
+				head->prev = node;
+				head = node;
+			}
+		}
 	};
 
 
 	template <typename A, typename B>class Map {
+	public:
 		class KeyVal {
 			A key;
 			B val;
