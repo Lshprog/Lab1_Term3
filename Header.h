@@ -1,10 +1,11 @@
 #pragma once
 #include <String>
-namespace datastruct {
+namespace linkedl {
+	/*template <typename T> class CircularLinkedList;*/
 	template <typename T> class Node {
 		Node<T>* next;
 		Node<T>* prev;
-		
+
 		Node(T info) {
 			this->info = info;
 			next = nullptr;
@@ -13,16 +14,17 @@ namespace datastruct {
 	public:
 		T info;
 	};
-	template <typename T> class NodeList {
+	template <typename T> class LinkedList {
+	/*friend class CircularLinkedList ;*/
 
 		Node<T>* head;
 		Node<T>* tail;
 	public:
-		NodeList() {
+		LinkedList() {
 			this->head = nullptr;
 			this->tail = nullptr;
 		}
-		~NodeList() {
+		~LinkedList() {
 			//....
 		}
 
@@ -36,12 +38,17 @@ namespace datastruct {
 				tail = node;
 			}
 		}
+	/*private:
+		template <typename T, typename A> T get_value(A value) {
+			Node<T> temp = head;
+
+		}*/
 
 	};
 
 
 
-	template <typename T> class Stack :NodeList {
+	template <typename T> class Stack :LinkedList {
 	public:
 		Node<T> pop_end() {
 			Node<T> temp = tail;
@@ -49,10 +56,10 @@ namespace datastruct {
 			tail->next = nullptr;
 			return temp;
 		}
-		
+
 	};
 
-	template <typename T> class Queue :NodeList {
+	template <typename T> class Queue :LinkedList {
 	public:
 		Node<T> pop_front() {
 			Node<T> temp = head;
@@ -78,56 +85,24 @@ namespace datastruct {
 	};
 
 
-	template <typename A, typename B>class Map {
+	template <typename T> class CircularLinkedList :LinkedList {
+		
 	public:
-		class KeyVal {
-			A key;
-			B val;
-		};
-		KeyVal* tail = nullptr;
-		KeyVal* head = nullptr;
-
-		inline void addtomap(A key, B val)
-		{
-			KeyVal* node = new KeyVal(key, val);
+		this->head->prev = tail;
+		this->tail->next = head;
+		void insert_elem(Node<T> node) {
 			if (head == nullptr && tail == nullptr) {
-				tail = node;
 				head = node;
+				tail = node;
 			}
 			else {
 				tail->next = node;
 				tail = node;
-			}
-		}
-		
-		inline B get_val(A key)
-		{
-			KeyVal* temp = head;
-			while (true) {
-				if (temp->key == key)
-					return temp->val;
-				if (temp->next == nullptr) {
-					std::cout << "Error";
-					return 0;
-				}
-				temp = temp->next;
-			}
-		}
-		
-		inline A get_key(B val)
-		{
-			KeyVal* temp = head;
-			while (true) {
-				if (temp->val == val)
-					return temp->key;
-				if (temp->next == nullptr) {
-					std::cout << "Error";
-					return 0;
-				}
-				temp = temp->next;
+				tail->next = head;
 			}
 		}
 	};
+
 	
-	
+
 }
