@@ -17,4 +17,5 @@ namespace books{
 		linkeld::LinkedList<Map<std::string, int>> list_of_books = linkeld::LinkedList<Map<std::string, int>>();
 
 	};
+
 };
