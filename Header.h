@@ -37,8 +37,18 @@ namespace linkeld {
 				tail->next = node;
 				tail = node;
 			}
+		
 		}
-
+	private:
+		template <typename A> T get_value(A value) {
+			Node<T> temp = head;
+			do {
+				if (temp->info->value == value)
+					return temp;
+				else
+					temp = temp->next;
+			} while (temp != nullptr || temp != head);
+		}
 	};
 
 
@@ -94,4 +104,5 @@ namespace linkeld {
 		}
 	};
 
+	
 }
