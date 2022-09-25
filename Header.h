@@ -1,12 +1,13 @@
 #pragma once
 #include"MapStruct.h"
+#include "BksCh.h"
 #include <String>
 namespace linkeld {
-	template <typename T> class CircularNodeList;
+
 	template <typename T> class Node {
 		Node<T>* next;
 		Node<T>* prev;
-		
+
 		Node(T info) {
 			this->info = info;
 			next = nullptr;
@@ -14,10 +15,9 @@ namespace linkeld {
 		}
 	public:
 		T info;
-		
+
 	};
 	template <typename T> class LinkedList {
-		friend class CircularNodeList;
 		Node<T>* head;
 		Node<T>* tail;
 	public:
@@ -39,7 +39,7 @@ namespace linkeld {
 				tail = node;
 			}
 		}
-		
+		template <typename A, typename B>
 		void insertrion_sort() {
 			Node<T> key = head->next;
 			Node<T> temp = head;
@@ -55,13 +55,13 @@ namespace linkeld {
 				key->next = temp;
 				if (temp == head){
 					head = key;
-				
+
 				else if (key = tail)
 					tail = temp;
 			}*/
 
 			while (key != nullptr) {
-				while (key != nullptr && temp->value > key->value) {
+				while (key != nullptr && books::compare<A>(temp,key)) {
 					temp = temp->prev;
 				}
 				(temp->prev)->next = key;
@@ -84,7 +84,7 @@ namespace linkeld {
 			Node<T> temp = head;
 			do {
 				if (temp->info->value == value)
-					return temp;	
+					return temp;
 				else
 					temp = temp->next;
 			} while (temp != nullptr || temp != head);
@@ -101,7 +101,7 @@ namespace linkeld {
 			tail->next = nullptr;
 			return temp;
 		}
-		
+
 	};
 
 	template <typename T> class Queue :LinkedList {
@@ -128,29 +128,7 @@ namespace linkeld {
 			}
 		}
 	};
+
+
 	
-	template <typename T> class CircularLinkedList : LinkedList {
-	public:
-		void insert_elem(Node<T> node) {
-			if (head == nullptr && tail == nullptr) {
-				head = node;
-				tail = node;
-			}
-			else {
-				head->prev = node;
-				head = node;
-				tail->head;
-			}
-		}
-	};
-
-	template <typename A> bool compare(A attribute_1, A attribute_2) {
-
-		if (attribute_1 > attribute_2)
-			return True;
-		else
-			return False;
-
-
-	};
 }

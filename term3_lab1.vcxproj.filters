@@ -23,7 +23,7 @@
     <ClInclude Include="Header.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header1.h">
+    <ClInclude Include="BksCh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Header2.h">
