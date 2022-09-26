@@ -17,9 +17,9 @@ namespace books{
 		linkeld::LinkedList<Map<std::string, int>> list_of_books = linkeld::LinkedList<Map<std::string, int>>();
 
 	};
-	bool compare(Book* node_1, Book* node_2) {
+	bool compare(Book node_1, Book node_2) {
 
-		if (node_1->pub_date > node_2->pub_date)
+		if (node_1.pub_date > node_2.pub_date)
 			return true;
 		else
 			return false;
