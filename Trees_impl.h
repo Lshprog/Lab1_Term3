@@ -230,7 +230,7 @@ namespace trees {
 	public:
 		T data;
 		int index_end;
-		std::vector<Arb_Binary_Node<T>*> children = std::vector<Arb_Binary_Node<T>*>;
+		std::vector<Arb_Binary_Node<T>*> children;
 
 		Arb_Binary_Node_Vector() {
 			this->data = NULL;

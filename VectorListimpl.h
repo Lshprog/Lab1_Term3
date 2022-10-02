@@ -5,7 +5,7 @@ namespace vectorl {
 	//to do: deletion rebalance
 	template <typename T> class VectorList {
 	public:
-		std::vector<T> arr = std::vector<T>();
+		std::vector<T> arr;
 		int index_end;
 
 		ArrayList() {
