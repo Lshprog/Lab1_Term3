@@ -139,13 +139,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BksCh.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Header.h" />
+    <ClInclude Include="LinkedListImpl.h" />
     <ClInclude Include="BksCh.h" />
-    <ClInclude Include="Header2.h" />
-    <ClInclude Include="Header3.h" />
+    <ClInclude Include="ArrayListImpl.h" />
+    <ClInclude Include="Trees_impl.h" />
+    <ClInclude Include="VectorListImpl.h" />
     <ClInclude Include="MapStruct.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

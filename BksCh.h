@@ -1,7 +1,13 @@
 #pragma once
-#include "Header.h" 
+#ifndef BKSCH_H
+#define BKSCH_H
+#include "LinkedListImpl.h" 
+#include "Trees_impl.h"
 
-namespace books{
+template <typename T>
+class linkedl::List;
+
+namespace books {
 	class Book {
 	public:
 		std::string name;
@@ -13,16 +19,10 @@ namespace books{
 	};
 	class Character {
 	public:
-		linkeld::LinkedList<std::string> list_of_names = linkeld::LinkedList<std::string>();
-		linkeld::LinkedList<Map<std::string, int>> list_of_books = linkeld::LinkedList<Map<std::string, int>>();
+		linkedl::List<std::string> list_of_names = linkedl::List<std::string>();
+		linkedl::List<Map<std::string, int>> list_of_books = linkedl::List<Map<std::string, int>>();
 
 	};
-	bool compare(Book node_1, Book node_2) {
-
-		if (node_1.pub_date > node_2.pub_date)
-			return true;
-		else
-			return false;
-
-	};
-};
+}
+bool compare_books(books::Book node_1, books::Book node_2);
+#endif

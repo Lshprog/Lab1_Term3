@@ -1,41 +1,55 @@
 #pragma once
-#include"MapStruct.h"
-#include "BksCh.h"
+#ifndef LINKEDLISTIMPL_H
+#define LINKEDLISTIMPL_H
+#include<iostream>
 #include <String>
-namespace linkeld {
+#include"MapStruct.h"
+//#include "BksCh.h"
+
+template <typename T>
+bool compare_books(T data1,T data2);
+
+namespace linkedl {
 
 	template <typename T> class Node {
+	public:
+		T data;
 		Node<T>* next;
 		Node<T>* prev;
-
-		Node(T info) {
-			this->info = info;
+		Node() {
+			this->data = NULL;
 			next = nullptr;
 			prev = nullptr;
 		}
-	public:
-		T info;
+		Node(T data) {
+			this->data = data;
+			next = nullptr;
+			prev = nullptr;
+		}
+		
 
 	};
-	template <typename T> class LinkedList {
+	template <typename T> class List {
+	public:
 		Node<T>* head;
 		Node<T>* tail;
-	public:
-		LinkedList() {
+	
+		List() {
 			this->head = nullptr;
 			this->tail = nullptr;
 		}
-		~LinkedList() {
+		~List() {
 			//....
 		}
 
-		void add_to_list(Node<T>* node) {
+		void add_elem(Node<T>* node) {
 			if (head == nullptr && tail == nullptr) {
 				head = node;
 				tail = node;
 			}
 			else {
 				tail->next = node;
+				node->prev = tail;
 				tail = node;
 			}
 		}
@@ -69,7 +83,7 @@ namespace linkeld {
 			Node<T>* temp_2 = key->next;
 
 			while (key != nullptr) {
-				while (key != nullptr && books::compare(temp->info, key->info)) {
+				while (key != nullptr && compare_books(temp->data, key->data)) {
 					temp = temp->prev;
 				}
 				swap_nodes(temp, key);
@@ -80,7 +94,7 @@ namespace linkeld {
 
 		void quick_sort(Node<T>* low, Node<T>* high ) {
 
-			if (books::compare(high->info, low->info)) {
+			if (compare_books(high->data, low->data)) {
 				Node<T>* node = partition_func(low, high);
 
 				quick_sort(low, node->prev);
@@ -97,7 +111,7 @@ namespace linkeld {
 			Node<T>* temp = low;
 
 			while(temp!=high) {
-				if (books::compare(pivot->info, temp->info)) {
+				if (compare_books(pivot->data, temp->data)) {
 					i_beg = i_beg->next;
 					swap_nodes(temp,i_beg);
 				}
@@ -108,23 +122,25 @@ namespace linkeld {
 
 
 		Node<T>* merge(Node<T>* firstNode, Node<T>* secondNode) {
-			Node<T>* merged = new Node;
-			Node<T>* temp = new Node;
+			Node<T>* merged = new Node<T>();
+			Node<T>* temp = new Node<T>();
 
 			// merged is equal to temp so in the end we have the top
 			// Node.
 			merged = temp;
 
 			// while either firstNode or secondNode becomes NULL
-			while (firstNode != NULL && secondNode != NULL) {
+			while (firstNode != nullptr && secondNode != nullptr) {
 
-				if (firstNode->data <= secondNode->data) {
+				if (compare_books(secondNode->data,firstNode->data)) {
 					temp->next = firstNode;
+					firstNode->prev = temp;
 					firstNode = firstNode->next;
 				}
 
 				else {
 					temp->next = secondNode;
+					secondNode->prev = temp;
 					secondNode = secondNode->next;
 				}
 				temp = temp->next;
@@ -132,14 +148,16 @@ namespace linkeld {
 
 			// any remaining Node in firstNode or secondNode gets
 			// inserted in the temp List
-			while (firstNode != NULL) {
+			while (firstNode != nullptr) {
 				temp->next = firstNode;
+				firstNode->prev = temp;
 				firstNode = firstNode->next;
 				temp = temp->next;
 			}
 
-			while (secondNode != NULL) {
+			while (secondNode != nullptr) {
 				temp->next = secondNode;
+				secondNode->prev = temp;
 				secondNode = secondNode->next;
 				temp = temp->next;
 			}
@@ -167,6 +185,7 @@ namespace linkeld {
 
 			mid = middle(head);
 			head2 = mid->next;
+			head2->prev = nullptr;
 			mid->next = nullptr;
 
 			Node<T>* finalhead = merge(start_merge_sort(head),start_merge_sort(head2));
@@ -177,38 +196,63 @@ namespace linkeld {
 
 
 
-	template <typename T> class Stack :LinkedList {
+	template <typename T> class Stack :virtual List<T> {
 	public:
 		Node<T>* pop_end() {
-			Node<T>* temp = tail;
-			tail = (tail->prev);
-			tail->next = nullptr;
-			return temp;
-		}
-
-	};
-
-	template <typename T> class Queue :LinkedList {
-	public:
-		Node<T>* pop_front() {
-			Node<T>* temp = head;
-			head = (head->next);
-			head->prev = nullptr;
-			return temp;
-		}
-
-	};
-
-	template <typename T> class DeQueue :Stack, Queue {
-	public:
-		void add_beg(Node<T>* node) {
-			if (head == nullptr && tail == nullptr) {
-				head = node;
-				tail = node;
+			if (this->tail != nullptr) {
+				Node<T>* temp = this->tail;
+				this->tail = (this->tail->prev);
+				this->tail->next = nullptr;
+				temp->prev = nullptr;
+				return temp;
 			}
 			else {
-				head->prev = node;
-				head = node;
+				std::cout << "stack is empty!" << std::endl;
+				return nullptr;
+			}
+		}
+
+	};
+
+	template <typename T> class Queue :virtual List<T> {
+	public:
+
+		T* front() {
+			if (this->head->data != nullptr) {
+				return this->head->data;
+			}
+			else {
+				std::cout << "queue is empty!" << std::endl;
+				return nullptr;
+			}
+		}
+
+		void pop_front() {
+			if (this->head != nullptr) {
+				Node<T>* temp = this->head;
+				this->head = (this->head->next);
+				this->head->prev = nullptr;
+				temp->next = nullptr;
+			}
+			else {
+				std::cout << "queue is empty!" << std::endl;
+			}
+		}
+
+	};
+
+	template <typename T> class DeQueue :Stack<T>, Queue<T> {
+	public:
+		void add_beg(Node<T>* node) {
+			if (this->head == nullptr && this->tail == nullptr) {
+				this->head = node;
+				this->tail = node;
+			}
+			else {
+				node->next = this->head;
+				this->head->prev = node;
+				this->head = node;
+				
 			}
 		}
 	};
@@ -216,3 +260,4 @@ namespace linkeld {
 
 	
 }
+#endif

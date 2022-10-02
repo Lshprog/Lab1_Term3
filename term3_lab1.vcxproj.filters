@@ -18,21 +18,27 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BksCh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Header.h">
+    <ClInclude Include="LinkedListImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BksCh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header2.h">
+    <ClInclude Include="ArrayListImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header3.h">
+    <ClInclude Include="VectorListImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MapStruct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Trees_impl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
