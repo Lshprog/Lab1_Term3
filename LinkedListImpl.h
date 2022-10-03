@@ -8,6 +8,8 @@
 
 template <typename T>
 bool compare_books(T data1,T data2);
+template <typename T>
+bool compare_books_no_equality(T node_1, T node_2);
 
 namespace linkedl {
 
@@ -83,7 +85,7 @@ namespace linkedl {
 			Node<T>* temp_2 = key->next;
 
 			while (key != nullptr) {
-				while (key != nullptr && compare_books(temp->data, key->data)) {
+				while (key != nullptr && compare_books_no_equality(temp->data, key->data)) {
 					temp = temp->prev;
 				}
 				swap_nodes(temp, key);
@@ -132,7 +134,7 @@ namespace linkedl {
 			// while either firstNode or secondNode becomes NULL
 			while (firstNode != nullptr && secondNode != nullptr) {
 
-				if (compare_books(secondNode->data,firstNode->data)) {
+				if (compare_books_no_equality(secondNode->data,firstNode->data)) {
 					temp->next = firstNode;
 					firstNode->prev = temp;
 					firstNode = firstNode->next;
