@@ -1,27 +1,15 @@
 #pragma once
-template <typename A, typename B>class Map {
+template <typename A, typename B>class Pair {
 public:
-	class KeyVal {
-		A key;
-		B val;
-	};
-	KeyVal* tail = nullptr;
-	KeyVal* head = nullptr;
+	A value_1;
+	B value_2;
 
-	inline void addtomap(A key, B val)
-	{
-		KeyVal* node = new KeyVal(key, val);
-		if (head == nullptr && tail == nullptr) {
-			tail = node;
-			head = node;
-		}
-		else {
-			tail->next = node;
-			tail = node;
-		}
+	Pair(A value_1, B value_2) {
+		this->value_1 = value_1;
+		this->value_2 = value_2;
 	}
 
-	inline B get_val(A key)
+	/*inline B get_val_1(A key)
 	{
 		KeyVal* temp = head;
 		while (true) {
@@ -47,5 +35,5 @@ public:
 			}
 			temp = temp->next;
 		}
-	}
+	}*/
 };

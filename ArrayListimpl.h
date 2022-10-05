@@ -2,13 +2,13 @@
 
 #include <iostream>
 
+
 const int arr_length = 30;
-template <typename T>
-bool compare_books(T data1, T data2);
+
 
 
 namespace arrayl{
-	//to do: deletion rebalance
+	
 	template <typename T> class ArrayList {
 	public:
 		T* array;
@@ -220,6 +220,12 @@ namespace arrayl{
 		T back_elem() {
 			return this->array[this->index_end - 1];
 		}
+		void pop_back() {
+			if (this->array[0] != NULL) {
+				delete this->array[this->index_end - 1];
+				this->index_end--;
+			}
+		}
 	};
 
 	template <typename T>class Queue :virtual ArrayList<T> {
@@ -228,8 +234,10 @@ namespace arrayl{
 		}
 
 		void pop_front() {
-			delete this->array[0];
-			this->swap_elements_zeroes();
+			if (this->array[0] != NULL) {
+				delete this->array[0];
+				this->swap_elements_zeroes();
+			}
 		}
 	};
 	

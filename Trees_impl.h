@@ -222,6 +222,9 @@ namespace trees {
 				return true;
 			return false;
 		}
+		void deletion_of_tree() {
+			delete root;
+		}
 	};
 
 
@@ -239,6 +242,10 @@ namespace trees {
 		Arb_Binary_Node_Vector(T data) {
 			this->data = data;
 			this->index_end = 0;
+		}
+		~Arb_Binary_Node_Vector() {
+			delete data;
+			children.clear();
 		}
 	};
 
@@ -270,9 +277,11 @@ namespace trees {
 			while (queue->head != nullptr) {
 				Arb_Binary_Node_Vector<T>* temp = queue.front();
 				queue.pop_front();
-				linkedl::Node<Arb_Binary_Node_Vector<T>>* check_node = temp->children->head;
-				while (check_node != nullptr) {
-					if (check_equality(check_node->data, noded)) {
+				Arb_Binary_Node_Vector<T> check_node = temp->children[0];
+				int i = 0;
+				while (this->children[i] != NULL) {
+					if (check_equality(check_node.data, noded)) {
+						delete queue;
 						return check_node;
 					}
 					else {
@@ -300,7 +309,34 @@ namespace trees {
 				return true;
 			return false;
 		}
+
+
+		void deletion_of_arbtree() {
+			delete root;
+			/*if (root == nullptr) {}
+
+			Arb_Binary_Node_Vector<T>* noded = new Arb_Binary_Node_Vector<T>(data);
+
+			linkedl::Queue<Arb_Binary_Node_Vector<T>> queue = linkedl::Queue<Arb_Binary_Node_Vector<T>>;
+			linkedl::Node<Arb_Binary_Node_Vector<T>>* temp = new linkedl::Node<Arb_Binary_Node_Vector<T>>(root);
+			queue.add_elem(temp);
+
+			while (queue->head != nullptr) {
+				Arb_Binary_Node_Vector<T>* temp = queue.front();
+				queue.pop_front();
+				int i = 0;
+				Arb_Binary_Node_Vector<T> check_node = temp->children[0];
+				while (i != NULL){
+					queue.add_elem(new linkedl::Node<Arb_Binary_Node_Vector<T>>(check_node));
+					i++;
+				}
+			}
+			delete queue;
+			std::cout << "No such element " << std::endl;
+			return nullptr;*/
+			
+		}
 	};
 
-	//change later
+	
 }

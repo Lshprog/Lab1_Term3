@@ -4,12 +4,24 @@
 #include<iostream>
 #include <String>
 #include"MapStruct.h"
-//#include "BksCh.h"
 
 template <typename T>
-bool compare_books(T data1,T data2);
+bool compare_books(T node_1, T node_2)
+{
+	if (node_1.pub_date_key >= node_2.pub_date_key)
+		return true;
+	else
+		return false;
+}
 template <typename T>
-bool compare_books_no_equality(T node_1, T node_2);
+bool compare_books_no_equality(T node_1, T node_2)
+{
+	if (node_1.pub_date_key > node_2.pub_date_key)
+		return true;
+	else
+		return false;
+}
+
 
 namespace linkedl {
 
@@ -18,8 +30,7 @@ namespace linkedl {
 		T data;
 		Node<T>* next;
 		Node<T>* prev;
-		Node() {
-			this->data = NULL;
+		Node() {//FIX PROBLEM
 			next = nullptr;
 			prev = nullptr;
 		}
@@ -28,7 +39,9 @@ namespace linkedl {
 			next = nullptr;
 			prev = nullptr;
 		}
-		
+		~Node() {
+
+		}
 
 	};
 	template <typename T> class List {
@@ -41,21 +54,35 @@ namespace linkedl {
 			this->tail = nullptr;
 		}
 		~List() {
-			//....
+			Node<T>* temp = head->next;
+			while (temp != nullptr) {
+				delete temp->prev;
+				temp = temp->next;
+			}
+			delete tail;
+			delete temp;
+			head = nullptr;
+			tail = nullptr;
 		}
 
-		void add_elem(Node<T>* node) {
+		void add_elem(T node) {
+			Node<T>* new_node = new Node<T>(node);
 			if (head == nullptr && tail == nullptr) {
-				head = node;
-				tail = node;
+				head = new_node;
+				tail = new_node;
 			}
 			else {
-				tail->next = node;
-				node->prev = tail;
-				tail = node;
+				tail->next = new_node;
+				new_node->prev = tail;
+				tail = new_node;
 			}
 		}
-
+		/*void print_linkedl() {
+			Node<T>* temp = head;
+			while (temp != nullptr) {
+				std::cout<<
+			}
+		}*/
 		void swap_nodes(Node<T>* temp, Node<T>* key) {
 
 			(temp->prev)->next = key;
@@ -85,7 +112,7 @@ namespace linkedl {
 			Node<T>* temp_2 = key->next;
 
 			while (key != nullptr) {
-				while (key != nullptr && compare_books_no_equality(temp->data, key->data)) {
+				while (key != nullptr && (compare_books_no_equality(temp->data, key->data))) {
 					temp = temp->prev;
 				}
 				swap_nodes(temp, key);
@@ -200,18 +227,36 @@ namespace linkedl {
 
 	template <typename T> class Stack :virtual List<T> {
 	public:
-		Node<T>* pop_end() {
-			if (this->tail != nullptr) {
-				Node<T>* temp = this->tail;
-				this->tail = (this->tail->prev);
-				this->tail->next = nullptr;
-				temp->prev = nullptr;
-				return temp;
+
+		T end() {
+			if (this->tail->data != nullptr) {
+				return this->tail->data;
 			}
 			else {
 				std::cout << "stack is empty!" << std::endl;
 				return nullptr;
 			}
+		}
+		void pop_end() {
+
+			Node<T>* temp = this->tail;
+			if (this->tail != nullptr) {
+				if (this->tail == this->head) {
+					this->head = nullptr;
+					this->tail = nullptr;
+				}
+				else {
+					this->tail = (this->tail->prev);
+					this->tail->next = nullptr;
+					temp->prev = nullptr;
+				}
+				
+			}
+			else {
+				std::cout << "stack is empty!" << std::endl;
+				
+			}
+			delete temp;
 		}
 
 	};
@@ -219,7 +264,7 @@ namespace linkedl {
 	template <typename T> class Queue :virtual List<T> {
 	public:
 
-		T* front() {
+		T front() {
 			if (this->head->data != nullptr) {
 				return this->head->data;
 			}
@@ -230,15 +275,22 @@ namespace linkedl {
 		}
 
 		void pop_front() {
+			Node<T>* temp = this->head;
 			if (this->head != nullptr) {
-				Node<T>* temp = this->head;
-				this->head = (this->head->next);
-				this->head->prev = nullptr;
-				temp->next = nullptr;
+				if (this->tail == this->head) {
+					this->head = nullptr;
+					this->tail = nullptr;
+				}
+				else {
+					this->head = (this->head->next);
+					this->head->prev = nullptr;
+					temp->next = nullptr;
+				}
 			}
 			else {
 				std::cout << "queue is empty!" << std::endl;
 			}
+			delete temp;
 		}
 
 	};
@@ -263,3 +315,4 @@ namespace linkedl {
 	
 }
 #endif
+

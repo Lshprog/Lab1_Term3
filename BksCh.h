@@ -3,6 +3,7 @@
 #define BKSCH_H
 #include "LinkedListImpl.h" 
 #include "Trees_impl.h"
+#include <cmath>
 
 template <typename T>
 class linkedl::List;
@@ -11,31 +12,34 @@ namespace books {
 	class Book {
 	public:
 		std::string name;
-		int key_to_author;
+		std::string author_name;
 		std::string pub_date;
 		int pub_date_key;
 		int num_of_pages;
 		std::string description;
 		int numb;
 
-		Book(std::string name, int key_to_author, std::string pub_date, int num_of_pages, std::string description, int numb) {
+		Book(std::string name, std::string author_name, std::string pub_date, int num_of_pages, std::string description, int numb) {
 			this->name = name;
-			this->key_to_author = key_to_author;
+			this->author_name = author_name;
 			this->pub_date = pub_date;
 			this->num_of_pages = num_of_pages;
 			this->description = description;
 			this->numb = numb;
+			this->pub_date_key = convert_date(pub_date);
 		}
 		Book(){	
-			this->key_to_author = 0;
 			this->num_of_pages = 0;
 			this->numb = 0;
+			this->pub_date_key = 0;
 		}
+
+		int convert_date(std::string date);
 	};
 	class Character {
 	public:
 		linkedl::List<std::string> list_of_names = linkedl::List<std::string>();
-		linkedl::List<Map<Book, int>> list_of_books = linkedl::List<Map<Book, int>>();
+		linkedl::List<Pair<Book, int>> list_of_books = linkedl::List<Pair<Book, int>>();
 
 	};
 }

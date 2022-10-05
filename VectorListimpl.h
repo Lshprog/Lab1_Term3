@@ -1,20 +1,35 @@
 #pragma once
 #include <iostream>
 #include <vector>
+template <typename T>
+bool compare_books(T node_1, T node_2)
+{
+	if (node_1.pub_date_key >= node_2.pub_date_key)
+		return true;
+	else
+		return false;
+}
+template <typename T>
+bool compare_books_no_equality(T node_1, T node_2)
+{
+	if (node_1.pub_date_key > node_2.pub_date_key)
+		return true;
+	else
+		return false;
+}
 namespace vectorl {
 	//to do: deletion rebalance
 	template <typename T> class VectorList {
 	public:
-		std::vector<T> arr;
+		std::vector<T> array;
 		int index_end;
 
-		ArrayList() {
+		VectorList() {
 			this->end = 0;
-			this->array = new T[arr_length];
 		}
 
-		~ArrayList() {
-			delete[] array;
+		~VectorList() {
+			array.clear();
 		}
 
 		void add_elem(T data) {
@@ -82,7 +97,7 @@ namespace vectorl {
 			}
 		}
 
-		int partition(T* arr, int start, int end)
+		int partition(std::vector<T>& arr, int start, int end)
 		{
 
 			T pivot = arr[start];
@@ -123,7 +138,7 @@ namespace vectorl {
 			return pivotIndex;
 		}
 
-		void quickSort(T* arr, int start, int end)
+		void quickSort(std::vector<T>& arr, int start, int end)
 		{
 
 			// base case
@@ -141,7 +156,7 @@ namespace vectorl {
 		}
 
 
-		void merge(T arr, int const left, int const mid, int const right)
+		void merge(std::vector<T>& arr, int const left, int const mid, int const right)
 		{
 			int const subArrayOne = mid - left + 1;
 			int const subArrayTwo = right - mid;
@@ -195,7 +210,7 @@ namespace vectorl {
 		// begin is for left index and end is
 		// right index of the sub-array
 		// of arr to be sorted */
-		void mergeSort(T* arr, int const begin, int const end)//1st in end = index_end - 1
+		void mergeSort(std::vector<T>& arr, int const begin, int const end)//1st in end = index_end - 1
 		{
 			if (begin >= end)
 				return; // Returns recursively
@@ -212,6 +227,12 @@ namespace vectorl {
 		T back_elem() {
 			return this->array[this->index_end - 1];
 		}
+		void pop_back() {
+			if (array[0] != NULL) {
+				delete->this > array[index_end - 1];
+				index_end--;
+			}
+		}
 	};
 
 	template <typename T>class Queue :virtual VectorList<T> {
@@ -220,8 +241,10 @@ namespace vectorl {
 		}
 
 		void pop_front() {
-			delete this->array[0];
-			this->swap_elements_zeroes();
+			if (array[0] != NULL) {
+				delete this->array[0];
+				this->swap_elements_zeroes();
+			}
 		}
 	};
 
