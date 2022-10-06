@@ -262,7 +262,7 @@ namespace trees {
 			root->index_end++;
 
 		}
-//.........................change later
+
 		linkedl::Node<Arb_Binary_Node_Vector<T>>* arbnode_search(T data) {// change node type later(to do)
 			if (root == nullptr) {
 				return nullptr;

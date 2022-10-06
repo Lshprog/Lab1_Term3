@@ -5,6 +5,8 @@
 #include <String>
 #include"MapStruct.h"
 
+
+
 template <typename T>
 bool compare_books(T node_1, T node_2)
 {
@@ -23,14 +25,16 @@ bool compare_books_no_equality(T node_1, T node_2)
 }
 
 
+
 namespace linkedl {
+	template<typename T> class List;
 
 	template <typename T> class Node {
 	public:
 		T data;
 		Node<T>* next;
 		Node<T>* prev;
-		Node() {//FIX PROBLEM
+		Node() {
 			next = nullptr;
 			prev = nullptr;
 		}
@@ -40,7 +44,7 @@ namespace linkedl {
 			prev = nullptr;
 		}
 		~Node() {
-
+			
 		}
 
 	};
@@ -54,19 +58,19 @@ namespace linkedl {
 			this->tail = nullptr;
 		}
 		~List() {
-			Node<T>* temp = head->next;
-			while (temp != nullptr) {
-				delete temp->prev;
-				temp = temp->next;
+			Node<T>* iter = this->head;
+			while (iter != nullptr)
+			{
+				Node<T>* temp = iter->next;
+				iter->~Node();
+				iter = temp;
 			}
-			delete tail;
-			delete temp;
-			head = nullptr;
-			tail = nullptr;
+			this->head = nullptr;
+			this->tail = nullptr;
 		}
 
-		void add_elem(T node) {
-			Node<T>* new_node = new Node<T>(node);
+		void add_elem(T data) {
+			Node<T>* new_node = new Node<T>(data);
 			if (head == nullptr && tail == nullptr) {
 				head = new_node;
 				tail = new_node;
@@ -77,26 +81,39 @@ namespace linkedl {
 				tail = new_node;
 			}
 		}
-		/*void print_linkedl() {
-			Node<T>* temp = head;
-			while (temp != nullptr) {
-				std::cout<<
+		
+		void push_elem(T data) {
+			Node<T>* node = new Node<T>(data);
+			if (this->head == nullptr && this->tail == nullptr) {
+				this->head = node;
+				this->tail = node;
 			}
-		}*/
-		void swap_nodes(Node<T>* temp, Node<T>* key) {
+			else {
+				node->next = this->head;
+				this->head->prev = node;
+				this->head = node;
 
-			(temp->prev)->next = key;
-			(key->next)->prev = temp;
-			temp->next = key->next;
-			key->prev = temp->prev;
+			}
+		}
+
+		void swap_nodes(Node<T>* temp, Node<T>* key) {
+			if (temp->prev != nullptr && key->next!=nullptr) {//CHANGED TOTAL SHIT
+				(temp->prev)->next = key;
+
+				(key->next)->prev = temp;
+				temp->next = key->next;
+				key->prev = temp->prev;
+			}
 			if (temp->next = key) {
 
 				temp->prev = key;
 				key->next = temp;
 			}
 			else {
-				temp->prev = key->prev;
-				key->next = temp->next;
+				if (key != nullptr) {//changed shit
+					temp->prev = key->prev;
+					key->next = temp->next;
+				}
 			}
 			if (temp == head)
 				head = key;
@@ -104,8 +121,7 @@ namespace linkedl {
 			else if (key = tail)
 				tail = temp;
 		}
-
-		template <typename A> void insertrion_sort() {
+		/*void insertrion_sort() {
 			Node<T>* key = head->next;
 			Node<T>* temp = head;
 			Node<T>* key_2 = (key->next)->next;
@@ -139,15 +155,88 @@ namespace linkedl {
 			Node<T>* i_beg = low->prev;
 			Node<T>* temp = low;
 
-			while(temp!=high) {
+			while (temp != high) {
 				if (compare_books(pivot->data, temp->data)) {
 					i_beg = i_beg->next;
-					swap_nodes(temp,i_beg);
+					swap_nodes(temp, i_beg);
 				}
 			}
 			swap_nodes(i_beg->next, pivot);
 			return i_beg->next;
+		}*/
+
+		void swap(T* a, T* b)
+		{
+			T t = *a; *a = *b; *b = t;
 		}
+
+		// A utility function to find
+		// last node of linked list 
+		
+
+		/* Considers last element as pivot,
+		places the pivot element at its
+		correct position in sorted array,
+		and places all smaller (smaller than
+		pivot) to left of pivot and all greater
+		elements to right of pivot */
+		Node<T>* partition(Node<T>* l, Node<T>* h)
+		{
+			// set pivot as h element 
+			T x = h->data;
+
+			// similar to i = l-1 for array implementation 
+			Node<T>* i = l->prev;
+
+			// Similar to "for (int j = l; j <= h- 1; j++)" 
+			for (Node<T>* j = l; j != h; j = j->next)
+			{
+				if (compare_books(x,j->data))
+				{
+					// Similar to i++ for array 
+					i = (i == nullptr) ? l : i->next;
+
+					swap(&(i->data), &(j->data));
+				}
+			}
+			i = (i == nullptr) ? l : i->next; // Similar to i++ 
+			swap(&(i->data), &(h->data));
+			return i;
+		}
+
+		/* A recursive implementation
+		of quicksort for linked list */
+		void _quickSort(Node<T>* l, Node<T>* h)
+		{
+			if (h != NULL && l != h && l != h->next)
+			{
+				Node<T>* p = partition(l, h);
+				_quickSort(l, p->prev);
+				_quickSort(p->next, h);
+			}
+		}
+
+		// The main function to sort a linked list.
+		// It mainly calls _quickSort() 
+		void quickSort()
+		{
+			// Find last node 
+			Node<T>* h = tail;
+
+			// Call the recursive QuickSort 
+			_quickSort(head, h);
+		}
+
+		// A utility function to print contents of arr 
+		/*void printList(Node<T>* head)
+		{
+			while (head)
+			{
+				cout << head->data << " ";
+				head = head->next;
+			}
+			cout << endl;
+		}*/
 
 
 		Node<T>* merge(Node<T>* firstNode, Node<T>* secondNode) {
@@ -205,7 +294,7 @@ namespace linkedl {
 			}
 			return slow;
 		}
-		Node<T>* start_merge_sort() {
+		Node<T>* start_merge_sort(Node<T>* head) {
 			if (head->next == nullptr)
 				return head;
 
@@ -297,18 +386,7 @@ namespace linkedl {
 
 	template <typename T> class DeQueue :Stack<T>, Queue<T> {
 	public:
-		void add_beg(Node<T>* node) {
-			if (this->head == nullptr && this->tail == nullptr) {
-				this->head = node;
-				this->tail = node;
-			}
-			else {
-				node->next = this->head;
-				this->head->prev = node;
-				this->head = node;
-				
-			}
-		}
+		
 	};
 
 

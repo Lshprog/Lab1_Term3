@@ -16,7 +16,7 @@ bool compare_books_no_equality(books::Book node_1, books::Book node_2)
 		return false;
 }
 
-int books::Book::convert_date(std::string date) {
+int books::Book::convert_date(char* date) {
 	int temp = 0;
 	temp = (int(date[4]) - 48) * pow(10, 7) + (int(date[5]) - 48) * pow(10, 6) + (int(date[6]) - 48) * pow(10, 5) +
 		(int(date[7]) - 48) * pow(10, 4) + (int(date[2]) - 48) * pow(10, 3) + (int(date[3]) - 48) * pow(10, 2) +

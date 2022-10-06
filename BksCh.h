@@ -4,6 +4,7 @@
 #include "LinkedListImpl.h" 
 #include "Trees_impl.h"
 #include <cmath>
+#include <stdlib.h>
 
 template <typename T>
 class linkedl::List;
@@ -11,35 +12,44 @@ class linkedl::List;
 namespace books {
 	class Book {
 	public:
-		std::string name;
-		std::string author_name;
-		std::string pub_date;
+		char name[20];
+		char author_name[20];
+		char pub_date[10];
 		int pub_date_key;
 		int num_of_pages;
-		std::string description;
+		char description[200];
 		int numb;
 
-		Book(std::string name, std::string author_name, std::string pub_date, int num_of_pages, std::string description, int numb) {
-			this->name = name;
-			this->author_name = author_name;
-			this->pub_date = pub_date;
+		Book(const char* name,const char* author_name,const char* pub_date, int num_of_pages,const char* description, int numb) {
+			strcpy_s(this->name, _countof(this->name),name);
+			strcpy_s(this->author_name, _countof(this->author_name), author_name);
+			strcpy_s(this->pub_date, _countof(this->pub_date),pub_date);
 			this->num_of_pages = num_of_pages;
-			this->description = description;
+			strcpy_s(this->description, _countof(this->description),description);
 			this->numb = numb;
-			this->pub_date_key = convert_date(pub_date);
+			this->pub_date_key = convert_date(this->pub_date);
 		}
 		Book(){	
+			this->name[20]=NULL;
+			this->author_name[20] = NULL;
+			this->pub_date[10]=NULL;
+			this->description[200] = NULL;
 			this->num_of_pages = 0;
 			this->numb = 0;
 			this->pub_date_key = 0;
 		}
 
-		int convert_date(std::string date);
+		int convert_date(char* date);
 	};
 	class Character {
 	public:
-		linkedl::List<std::string> list_of_names = linkedl::List<std::string>();
-		linkedl::List<Pair<Book, int>> list_of_books = linkedl::List<Pair<Book, int>>();
+		
+		linkedl::List<std::string>* list_of_names = new linkedl::List<std::string>();
+		linkedl::List<Pair<Book, int>>* list_of_books = new linkedl::List<Pair<Book, int>>();
+
+		Character() {
+
+		}
 
 	};
 }
