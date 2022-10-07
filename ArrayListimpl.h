@@ -11,12 +11,11 @@ namespace arrayl{
 	
 	template <typename T> class ArrayList {
 	public:
-		T* array;
+		T array[arr_length];
 		int index_end;
 
 		ArrayList() {
 			this->index_end = 0;
-			this->array = new T[arr_length];
 		}
 
 		void add_elem(T data) {
