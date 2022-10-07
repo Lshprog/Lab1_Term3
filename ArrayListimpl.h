@@ -15,7 +15,7 @@ namespace arrayl{
 		int index_end;
 
 		ArrayList() {
-			this->end = 0;
+			this->index_end = 0;
 			this->array = new T[arr_length];
 		}
 

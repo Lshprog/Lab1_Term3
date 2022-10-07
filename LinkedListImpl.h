@@ -121,58 +121,77 @@ namespace linkedl {
 			else if (key = tail)
 				tail = temp;
 		}
-		/*void insertrion_sort() {
-			Node<T>* key = head->next;
-			Node<T>* temp = head;
-			Node<T>* key_2 = (key->next)->next;
-			Node<T>* temp_2 = key->next;
 
-			while (key != nullptr) {
-				while (key != nullptr && (compare_books_no_equality(temp->data, key->data))) {
-					temp = temp->prev;
-				}
-				swap_nodes(temp, key);
-				key = key_2;
-				temp = temp_2;
+		void insertionSort(Node<T>* headref)
+		{
+			// Initialize sorted linked list
+			Node<T>* sorted = nullptr;
+			Node<T>* current = headref;
+			// Traverse the given linked list and insert every
+			// node to sorted
+			while (current != nullptr) {
+				// Store next for next iteration
+				Node<T>* nextn = current->next;
+				// insert current in sorted linked list
+				sortedInsert(current,sorted);
+				// Update current
+				current = nextn;
 			}
+			// Update head_ref to point to sorted linked list
+			head = sorted;
 		}
 
-		void quick_sort(Node<T>* low, Node<T>* high ) {
-
-			if (compare_books(high->data, low->data)) {
-				Node<T>* node = partition_func(low, high);
-
-				quick_sort(low, node->prev);
-				quick_sort(node->next, high);
+		/*
+		 * function to insert a new_node in a list. Note that
+		 * this function expects a pointer to head_ref as this
+		 * can modify the head of the input linked list
+		 * (similar to push())
+		 */
+		void sortedInsert(Node<T>* newnode,Node<T>* &sorted)
+		{
+			/* Special case for the head end */
+			if (sorted == nullptr || compare_books(sorted->data,newnode->data)) {
+				newnode->next = sorted;
+				if (sorted != nullptr)
+					sorted->prev = newnode;
+				else
+					tail = newnode;
+				sorted = newnode;
+			}
+			else {
+				Node<T>* current = sorted;
+				/* Locate the node before the point of insertion
+				 */
+				while (current->next != nullptr
+					&& compare_books_no_equality(newnode->data,current->next->data)) {
+					current = current->next;
+				}
+				newnode->next = current->next;
+				if (current->next != nullptr)
+					(current->next)->prev = newnode;
+				else
+					tail = newnode;
+				
+				current->next = newnode;
+				newnode->prev = current;
 			}
 		}
-
-
-		Node<T>* partition_func(Node<T>* low, Node<T>* high) {
-
-
-			Node<T>* pivot = high;
-			Node<T>* i_beg = low->prev;
-			Node<T>* temp = low;
-
-			while (temp != high) {
-				if (compare_books(pivot->data, temp->data)) {
-					i_beg = i_beg->next;
-					swap_nodes(temp, i_beg);
-				}
+		/* Function to print linked list */
+		/*void printlist(Node* head)
+		{
+			while (head != NULL) {
+				cout << head->val << " ";
+				head = head->next;
 			}
-			swap_nodes(i_beg->next, pivot);
-			return i_beg->next;
 		}*/
 
+
+
+		/* Swap data of nodes */
 		void swap(T* a, T* b)
 		{
 			T t = *a; *a = *b; *b = t;
 		}
-
-		// A utility function to find
-		// last node of linked list 
-		
 
 		/* Considers last element as pivot,
 		places the pivot element at its
@@ -226,18 +245,6 @@ namespace linkedl {
 			// Call the recursive QuickSort 
 			_quickSort(head, h);
 		}
-
-		// A utility function to print contents of arr 
-		/*void printList(Node<T>* head)
-		{
-			while (head)
-			{
-				cout << head->data << " ";
-				head = head->next;
-			}
-			cout << endl;
-		}*/
-
 
 		Node<T>* merge(Node<T>* firstNode, Node<T>* secondNode) {
 			Node<T>* merged = new Node<T>();

@@ -5,7 +5,7 @@
 #include "MapStruct.h"
 //#include <iostream>
 
-linkedl::List<linkedl::List<books::Book>*> start_prog(linkedl::List<books::Character> listofch) {
+linkedl::List<linkedl::List<books::Book>*> start_prog_linkedl(linkedl::List<books::Character> listofch) {
 	linkedl::List<linkedl::List<books::Book>*> series = linkedl::List<linkedl::List<books::Book>*>();
 	linkedl::Node<books::Character>* tempn = listofch.head;
 
@@ -23,7 +23,9 @@ linkedl::List<linkedl::List<books::Book>*> start_prog(linkedl::List<books::Chara
 			}
 		}
 
-		temp_node_series->data.quickSort();
+
+		temp_node_series->data.insertionSort(temp_node_series->data.head);
+		//temp_node_series->data.quickSort();
 		//temp_node_series->data.head = temp_node_series->data.start_merge_sort(temp_node_series->data.head);
 		series.add_elem(&temp_node_series->data);
 		tempn = tempn->next;
@@ -33,10 +35,13 @@ linkedl::List<linkedl::List<books::Book>*> start_prog(linkedl::List<books::Chara
 	return series;
 }
 
+arrayl::ArrayList<arrayl::ArrayList<books::Book>> start_prog_arrayl(arrayl::ArrayList<books::Character> listofch) {
+
+}
 
 
 int main() {
-	linkedl::List<books::Book> list1 = linkedl::List<books::Book>();
+	/*linkedl::List<books::Book> list1 = linkedl::List<books::Book>();
 	books::Book book1 = books::Book("Abc11", "ale1x", "12122004", 20, "nice", 2);
 	books::Book book2 = books::Book("Abc","alex","12122003",20,"nice",1);
 	list1.add_elem(book1);
@@ -57,8 +62,21 @@ int main() {
 	character1.list_of_books->add_elem(pair2);
 	listch.add_elem(character1);
 	linkedl::List<linkedl::List<books::Book>*> series =	start_prog(listch);
-	
+	*/
 		
+
+	arrayl::ArrayList<books::Book> arrlist1 = arrayl::ArrayList<books::Book>();
+	books::Book book1 = books::Book("Abc11", "ale1x", "12122004", 20, "nice", 2);
+	books::Book book2 = books::Book("Abc", "alex", "12122003", 20, "nice", 1);
+	arrlist1.add_elem(book1);
+	arrlist1.add_elem(book2);
+	for (int i = 0; i < arrlist1.index_end; i++) {
+		std::cout << arrlist1.array[i].pub_date_key <<std::endl;
+	}
+
+
+
+
 }
 
 

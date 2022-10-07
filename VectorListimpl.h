@@ -25,7 +25,7 @@ namespace vectorl {
 		int index_end;
 
 		VectorList() {
-			this->end = 0;
+			this->index_end = 0;
 		}
 
 		~VectorList() {
