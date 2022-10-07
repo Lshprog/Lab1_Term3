@@ -10,6 +10,7 @@ template <typename T>
 class linkedl::List;
 
 namespace books {
+	
 	class Book {
 	public:
 		char name[20];
@@ -41,11 +42,12 @@ namespace books {
 
 		int convert_date(char* date);
 	};
+	template <typename A,typename B>
 	class Character {
 	public:
 		
-		linkedl::List<std::string>* list_of_names = new linkedl::List<std::string>();
-		linkedl::List<Pair<Book, int>>* list_of_books = new linkedl::List<Pair<Book, int>>();
+		A* list_of_names = new A();
+		B* list_of_books = new B();
 
 		Character() {
 

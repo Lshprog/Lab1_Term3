@@ -1,27 +1,13 @@
 #pragma once
 #include <iostream>
 #include <vector>
-template <typename T>
-bool compare_books(T node_1, T node_2)
-{
-	if (node_1.pub_date_key >= node_2.pub_date_key)
-		return true;
-	else
-		return false;
-}
-template <typename T>
-bool compare_books_no_equality(T node_1, T node_2)
-{
-	if (node_1.pub_date_key > node_2.pub_date_key)
-		return true;
-	else
-		return false;
-}
+
+
 namespace vectorl {
 	//to do: deletion rebalance
 	template <typename T> class VectorList {
 	public:
-		std::vector<T> array;
+		std::vector<T> array = std::vector<T>();
 		int index_end;
 
 		VectorList() {
@@ -33,7 +19,7 @@ namespace vectorl {
 		}
 
 		void add_elem(T data) {
-			array[index_end] = data;
+			array.push_back(data);
 			index_end++;
 				
 		}
@@ -228,9 +214,9 @@ namespace vectorl {
 			return this->array[this->index_end - 1];
 		}
 		void pop_back() {
-			if (array[0] != NULL) {
-				delete->this > array[index_end - 1];
-				index_end--;
+			if (this->array[0] != NULL) {
+				delete this->array[this->index_end - 1];
+				this->index_end--;
 			}
 		}
 	};
@@ -241,7 +227,7 @@ namespace vectorl {
 		}
 
 		void pop_front() {
-			if (array[0] != NULL) {
+			if (this->array[0] != NULL) {
 				delete this->array[0];
 				this->swap_elements_zeroes();
 			}

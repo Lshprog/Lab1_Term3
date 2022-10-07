@@ -19,10 +19,6 @@ namespace arrayl{
 			this->array = new T[arr_length];
 		}
 
-		~ArrayList() {
-			delete[] array;
-		}
-
 		void add_elem(T data) {
 			if (index_end < arr_length) {
 				array[index_end] = data;
@@ -89,45 +85,72 @@ namespace arrayl{
 				this->array[j + 1] = key;
 			}
 		}
-
-		int partition(T* arr, int start, int end)
+		 void swap(T* arr, int i, int j)
+		{
+			T temp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = temp;
+		}
+		int partition(T* arr, int low, int high)
 		{
 
-			T pivot = arr[start];
 
-			int count = 0;
-			for (int i = start + 1; i <= end; i++) {
-				if (compare_books(pivot, arr[i]))
-					count++;
-			}
+			T pivot = arr[high];
 
-			// Giving pivot element its correct position
-			int pivotIndex = start + count;
-			T temp = arr[pivotIndex];
-			arr[pivotIndex] = arr[start];
-			arr[start] = temp;
+			// Index of smaller element and
+			// indicates the right position
+			// of pivot found so far
+			int i = (low - 1);
 
-			// Sorting left and right parts of the pivot element
-			int i = start, j = end;
+			for (int j = low; j <= high - 1; j++) {
 
-			while (i < pivotIndex && j > pivotIndex) {
+				// If current element is smaller
+				// than the pivot
+				if (compare_books_no_equality(pivot,arr[j])) {
 
-				while (compare_books(pivot, arr[i])) {
+					// Increment index of
+					// smaller element
 					i++;
-				}
-
-				while (compare_books(arr[i],pivot)) {
-					j--;
-				}
-
-				if (i < pivotIndex && j > pivotIndex) {
-					temp = arr[i++];
-					arr[i++] = arr[j--];
-					arr[j--] = temp;
+					swap(arr, i, j);
 				}
 			}
-			delete temp;
-			return pivotIndex;
+			swap(arr, i + 1, high);
+			return (i + 1);
+			//T pivot = arr[start];
+
+			//int count = 0;
+			//for (int i = start + 1; i <= end; i++) {
+			//	if (compare_books(pivot, arr[i]))
+			//		count++;
+			//}
+
+			//// Giving pivot element its correct position
+			//int pivotIndex = start + count;
+			//T temp = arr[pivotIndex];
+			//arr[pivotIndex] = arr[start];
+			//arr[start] = temp;
+
+			//// Sorting left and right parts of the pivot element
+			//int i = start, j = end;
+
+			//while (i < pivotIndex && j > pivotIndex) {
+
+			//	while (compare_books(pivot, arr[i])) {
+			//		i++;
+			//	}
+
+			//	while (compare_books(arr[j],pivot)) {
+			//		j--;
+			//	}
+
+			//	if (i < pivotIndex && j > pivotIndex) {
+			//		temp = arr[i++];
+			//		arr[i++] = arr[j--];
+			//		arr[j--] = temp;
+			//	}
+			//}
+			//
+			//return pivotIndex;
 		}
 
 		void quickSort(T* arr, int start, int end)
@@ -148,12 +171,11 @@ namespace arrayl{
 		}
 
 
-		void merge(T arr, int const left, int const mid, int const right)
+		void merge(T* arr, int const left, int const mid, int const right)
 		{
 			int const subArrayOne = mid - left + 1;
 			int const subArrayTwo = right - mid;
-			T* leftArray = new T[subArrayOne];
-			T* rightArray = new T[subArrayTwo];
+			
 			// Create temp arrays
 			T* leftArray = new T[subArrayOne];
 			T* rightArray = new T[subArrayTwo];
