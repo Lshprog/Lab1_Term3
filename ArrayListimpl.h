@@ -19,6 +19,12 @@ namespace arrayl{
 			this->array = new T[arr_length];
 		}
 
+		~ArrayList() {//Problem to fix
+
+			delete[] array;
+			
+		}
+
 		void add_elem(T data) {
 			if (index_end < arr_length) {
 				array[index_end] = data;
