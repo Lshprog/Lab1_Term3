@@ -27,8 +27,6 @@ bool compare_books_no_equality(T node_1, T node_2)
 
 
 namespace linkedl {
-	template<typename T> class List;
-
 	template <typename T> class Node {
 	public:
 		T data;
@@ -61,6 +59,7 @@ namespace linkedl {
 			Node<T>* iter = this->head;
 			while (iter != nullptr)
 			{
+				
 				Node<T>* temp = iter->next;
 				iter->~Node();
 				iter = temp;
@@ -71,17 +70,49 @@ namespace linkedl {
 
 		void add_elem(T data) {
 			Node<T>* new_node = new Node<T>(data);
-			if (head == nullptr && tail == nullptr) {
-				head = new_node;
-				tail = new_node;
+			if (this->head == nullptr && this->tail == nullptr) {
+				this->head = new_node;
+				this->tail = new_node;
 			}
 			else {
-				tail->next = new_node;
-				new_node->prev = tail;
-				tail = new_node;
+				this->tail->next = new_node;
+				new_node->prev = this->tail;
+				this->tail = new_node;
 			}
 		}
-		
+
+		void delete_elem(T data) {
+			Node<T>* temp = this->head;
+			while (temp != nullptr) {
+				if (temp->data == data) {
+					if (temp == tail) {
+						(temp->prev)->next = nullptr;
+						this->tail = temp->prev;
+						delete temp;
+					}
+					else if (temp == head) {
+						(temp->next)->prev = nullptr;
+						this->head = temp->next;
+						delete temp;
+					}
+					else {
+						(temp->prev)->next = temp->next;
+						(temp->next)->prev = temp->prev;
+					}
+				}
+			}
+		}
+
+		Node<T>* search_elem(T data) {
+			Node<T>* temp = this->head;
+			while (temp != nullptr) {
+				if (temp->data.id == data.id)
+					return temp;
+			}
+			
+			return nullptr;
+
+		}
 		void push_elem(T data) {
 			Node<T>* node = new Node<T>(data);
 			if (this->head == nullptr && this->tail == nullptr) {
@@ -357,7 +388,7 @@ namespace linkedl {
 
 	};
 
-	template <typename T> class Queue :virtual List<T> {
+	template <typename T> class Queue :virtual public List<T> {
 	public:
 
 		T front() {
@@ -391,7 +422,7 @@ namespace linkedl {
 
 	};
 
-	template <typename T> class DeQueue :Stack<T>, Queue<T> {
+	template <typename T> class DeQueue :virtual Stack<T>,virtual Queue<T> {
 	public:
 		
 	};

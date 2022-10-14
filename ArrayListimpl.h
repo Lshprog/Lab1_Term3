@@ -34,11 +34,7 @@ namespace arrayl{
 				std::cout << "Not enough space!" << std::endl;
 		}
 
-		void delete_elem(T data) {
-			int i = search_elem_index(data);
-			delete array[i];
-			index_end--;
-		}
+		
 
 		int search_elem_index(T data) {
 			int i = 0;
@@ -243,28 +239,34 @@ namespace arrayl{
 
 	};
 
-	template <typename T> class Stack :virtual ArrayList<T> {
-		
+	template <typename T> class Stack :virtual public ArrayList<T> {
+	public:
 		T back_elem() {
 			return this->array[this->index_end - 1];
 		}
 		void pop_back() {
 			if (this->array[0] != NULL) {
-				delete this->array[this->index_end - 1];
-				this->index_end--;
+				if (this->index_end > 0) {
+					this->array[this->index_end - 1] = NULL;
+					this->index_end--;
+				}
 			}
 		}
 	};
 
-	template <typename T>class Queue :virtual ArrayList<T> {
+	template <typename T>class Queue :virtual public ArrayList<T> {
+	public:
 		T front_elem() {
 			return this->array[0];
 		}
 
 		void pop_front() {
 			if (this->array[0] != NULL) {
-				delete this->array[0];
-				this->swap_elements_zeroes();
+				for (int i = 0; i < this->index_end; i++) {
+					this->array[i] = this->array[i + 1];
+				}
+				this->array[this->index_end - 1] = NULL;
+				this->index_end--;
 			}
 		}
 	};

@@ -24,11 +24,6 @@ namespace vectorl {
 				
 		}
 
-		void delete_elem(T data) {
-			int i = search_elem_index(data);
-			delete array[i];
-			index_end--;
-		}
 
 		int search_elem_index(T data) {
 			int i = 0;
@@ -208,28 +203,28 @@ namespace vectorl {
 		}
 	};
 
-	template <typename T> class Stack :virtual VectorList<T> {
-
+	template <typename T> class Stack :virtual public VectorList<T> {
+	public:
 		T back_elem() {
 			return this->array[this->index_end - 1];
 		}
-		void pop_back() {
+		void popBack() {
 			if (this->array[0] != NULL) {
-				delete this->array[this->index_end - 1];
+				this->array.pop_back();
 				this->index_end--;
 			}
 		}
 	};
 
-	template <typename T>class Queue :virtual VectorList<T> {
+	template <typename T>class Queue :virtual public VectorList<T> {
+	public:
 		T front_elem() {
 			return this->array[0];
 		}
 
 		void pop_front() {
 			if (this->array[0] != NULL) {
-				delete this->array[0];
-				this->swap_elements_zeroes();
+				this->array.erase(this->array.begin());
 			}
 		}
 	};

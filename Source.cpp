@@ -2,7 +2,7 @@
 #include "LinkedListImpl.h"
 #include "Trees_impl.h"
 #include "ArrayListImpl.h"
-#include"VectorListImpl.h"
+#include "VectorListImpl.h"
 #include "MapStruct.h"
 //#include <iostream>
 
@@ -103,6 +103,7 @@ vectorl::VectorList<vectorl::VectorList<books::Book>> start_prog_vectorl(vectorl
 }
 
 int main() {
+
 	/*linkedl::List<books::Book> list1 = linkedl::List<books::Book>();
 	books::Book book1 = books::Book("Abc11", "ale1x", "12122004", 20, "nice", 2);
 	books::Book book2 = books::Book("Abc","alex","12122003",20,"nice",1);
@@ -115,8 +116,8 @@ int main() {
 		std::cout << temp->data.pub_date_key<<std::endl;
 		temp = temp->next;
 	}
-	
-	linkedl::List<books::Character<linkedl::List<std::string>, linkedl::List<Pair<books::Book, int>>>> listch = 
+
+	linkedl::List<books::Character<linkedl::List<std::string>, linkedl::List<Pair<books::Book, int>>>> listch =
 		linkedl::List<books::Character<linkedl::List<std::string>, linkedl::List<Pair<books::Book, int>>>>();
 
 	books::Character<linkedl::List<std::string>, linkedl::List<Pair<books::Book, int>>>character1 =
@@ -133,10 +134,10 @@ int main() {
 	character1.list_of_books->add_elem(pair3);
 	listch.add_elem(character1);
 	linkedl::List<linkedl::List<books::Book>*> series =	start_prog_linkedl(listch);*/
-	
-		
 
-	arrayl::ArrayList<books::Book> arrlist1 = arrayl::ArrayList<books::Book>();
+
+
+	/*arrayl::ArrayList<books::Book> arrlist1 = arrayl::ArrayList<books::Book>();
 	books::Book book1 = books::Book("Abc11", "ale1x", "12122004", 20, "nice", 2);
 	books::Book book2 = books::Book("Abc", "alex", "12122003", 20, "nice", 1);
 	books::Book book3 = books::Book("Abc12", "alexvika", "12122005", 20, "nice", 3);
@@ -171,7 +172,7 @@ int main() {
 		for (int j = 0; j < series.array[i].index_end; j++) {
 			std::cout << series.array[i].array[j].pub_date_key << std::endl;
 		}
-	}
+	}*/
 
 
 	/*vectorl::VectorList<books::Book> veclist1 = vectorl::VectorList<books::Book>();
@@ -181,6 +182,7 @@ int main() {
 	veclist1.add_elem(book1);
 	veclist1.add_elem(book2);
 	veclist1.add_elem(book3);
+	
 	for (int i = 0; i < veclist1.index_end; i++) {
 		std::cout << veclist1.array[i].pub_date_key << std::endl;
 	}
@@ -209,8 +211,43 @@ int main() {
 	for (int i = 0; i < series.index_end; i++) {
 		for (int j = 0; j < series.array[i].index_end; j++) {
 			std::cout << series.array[i].array[j].pub_date_key << std::endl;
-		}	
+		}
 	}*/
+
+
+	/*books::Book book1 = books::Book("Abc11", "ale1x", "12122004", 20, "nice", 2);
+	books::Book book2 = books::Book("Abc", "alex", "12122003", 20, "nice", 1);
+	books::Book book3 = books::Book("Abc12", "alexvika", "12122005", 20, "nice", 3);
+	trees::BinarySearchTree<books::Book> newtree = trees::BinarySearchTree<books::Book>();
+	newtree.bnode_insert(new trees::Binary_Node<books::Book>(book1), newtree.root);
+	newtree.bnode_insert(new trees::Binary_Node<books::Book>(book2), newtree.root);
+	newtree.bnode_insert(new trees::Binary_Node<books::Book>(book3), newtree.root);
+	newtree.treeout(newtree.root);
+	newtree.bnode_delete(book1);
+	newtree.bnode_delete(book3);
+	newtree.treeout(newtree.root);*/
+
+	/*books::Book book1 = books::Book("Abc11", "ale1x", "12122004", 20, "nice", 2);
+	books::Book book2 = books::Book("Abc", "alex", "12122003", 20, "nice", 1);
+	books::Book book3 = books::Book("Abc12", "alexvika", "12122005", 20, "nice", 3);
+
+	trees::GeneralTree<books::Book> newtree = trees::GeneralTree<books::Book>();
+	newtree.arbnode_insert(book1);
+	newtree.arbnode_insert(book2);
+	newtree.arbnode_insert(book3);
+	newtree.arbnode_delete(book1);*/
+
+
+	books::Book book1 = books::Book("Abc11", "ale1x", "12122004", 20, "nice", 2);
+	books::Book book2 = books::Book("Abc", "alex", "12122003", 20, "nice", 1);
+	books::Book book3 = books::Book("Abc12", "alexvika", "12122005", 20, "nice", 3);
+
+	trees::GeneralTreeVector<books::Book> newtree = trees::GeneralTreeVector<books::Book>();
+	newtree.arb_node_vec_insert(book1);
+	newtree.arb_node_vec_insert(book2);
+	newtree.arb_node_vec_insert(book3);
+	newtree.arbnode_delete(book1);
+
 
 }
 

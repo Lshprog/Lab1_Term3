@@ -19,7 +19,7 @@ namespace books {
 		int pub_date_key;
 		int num_of_pages;
 		char description[200];
-		int numb;
+		int id;
 
 		Book(const char* name,const char* author_name,const char* pub_date, int num_of_pages,const char* description, int numb) {
 			strcpy_s(this->name, _countof(this->name),name);
@@ -27,7 +27,7 @@ namespace books {
 			strcpy_s(this->pub_date, _countof(this->pub_date),pub_date);
 			this->num_of_pages = num_of_pages;
 			strcpy_s(this->description, _countof(this->description),description);
-			this->numb = numb;
+			this->id = numb;
 			this->pub_date_key = convert_date(this->pub_date);
 		}
 		Book(){	
@@ -36,7 +36,7 @@ namespace books {
 			this->pub_date[10]=NULL;
 			this->description[200] = NULL;
 			this->num_of_pages = 0;
-			this->numb = 0;
+			this->id = 0;
 			this->pub_date_key = 0;
 		}
 
@@ -52,7 +52,6 @@ namespace books {
 		Character() {
 
 		}
-
 	};
 }
 bool compare_books(books::Book node_1, books::Book node_2);
