@@ -39,6 +39,7 @@ namespace books {
 			this->id = 0;
 			this->pub_date_key = 0;
 		}
+		
 
 		int convert_date(char* date);
 	};
@@ -50,7 +51,12 @@ namespace books {
 		B* list_of_books = new B();
 
 		Character() {
+			
+		}
 
+		~Character() {
+			delete list_of_books;
+			delete list_of_names;
 		}
 	};
 }

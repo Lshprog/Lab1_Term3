@@ -42,7 +42,7 @@ namespace linkedl {
 			prev = nullptr;
 		}
 		~Node() {
-			
+			data.~T();
 		}
 
 	};
@@ -89,17 +89,21 @@ namespace linkedl {
 						(temp->prev)->next = nullptr;
 						this->tail = temp->prev;
 						delete temp;
+						return;
 					}
 					else if (temp == head) {
 						(temp->next)->prev = nullptr;
 						this->head = temp->next;
 						delete temp;
+						return;
 					}
 					else {
 						(temp->prev)->next = temp->next;
 						(temp->next)->prev = temp->prev;
+						return;
 					}
 				}
+				temp = temp->next;
 			}
 		}
 

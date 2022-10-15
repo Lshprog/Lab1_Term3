@@ -235,10 +235,10 @@ int main() {
 	newtree.arbnode_insert(book1);
 	newtree.arbnode_insert(book2);
 	newtree.arbnode_insert(book3);
-	newtree.arbnode_delete(book1);*/
+	newtree.arbnode_delete(book2);*/
 
 
-	books::Book book1 = books::Book("Abc11", "ale1x", "12122004", 20, "nice", 2);
+	/*books::Book book1 = books::Book("Abc11", "ale1x", "12122004", 20, "nice", 2);
 	books::Book book2 = books::Book("Abc", "alex", "12122003", 20, "nice", 1);
 	books::Book book3 = books::Book("Abc12", "alexvika", "12122005", 20, "nice", 3);
 
@@ -246,7 +246,7 @@ int main() {
 	newtree.arb_node_vec_insert(book1);
 	newtree.arb_node_vec_insert(book2);
 	newtree.arb_node_vec_insert(book3);
-	newtree.arbnode_delete(book1);
+	newtree.arbnode_delete(book2);*/
 
 
 }

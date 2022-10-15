@@ -204,23 +204,28 @@ namespace trees {
 	};
 
 	template <typename T>
-	class Arb_Binary_Node {
+	class Arb_Node {
 	public:
 		T data;
-		Arb_Binary_Node<T>* parent;
-		linkedl::List<Arb_Binary_Node<T>*> children = linkedl::List<Arb_Binary_Node<T>*>();
+		Arb_Node<T>* parent;
+		linkedl::List<Arb_Node<T>*> children = linkedl::List<Arb_Node<T>*>();
 
-		Arb_Binary_Node() {
+		Arb_Node() {
 			this->parent = nullptr;
 			this->data = NULL;
 		}
-		Arb_Binary_Node(T data) {
+		Arb_Node(T data) {
 			this->parent = nullptr;
 			this->data = data;
 			
 		}
-		~Arb_Binary_Node() {
-			children.~List();
+		~Arb_Node() {
+			
+			linkedl::Node<Arb_Node<T>*>* temp = this->children.head;
+			while (temp!=nullptr ) {
+				delete temp->data;
+				temp = temp->next;
+			}
 		}
 	};
 
@@ -229,7 +234,7 @@ namespace trees {
 	class GeneralTree {
 	public:
 
-		Arb_Binary_Node<T>* root;
+		Arb_Node<T>* root;
 
 		GeneralTree() {
 			root = nullptr;
@@ -240,7 +245,7 @@ namespace trees {
 		}
 		
 		void arbnode_insert(T data) {
-			Arb_Binary_Node<T>* noded = new Arb_Binary_Node<T>(data);
+			Arb_Node<T>* noded = new Arb_Node<T>(data);
 			if (this->root == nullptr) {
 				root = noded;
 				return;
@@ -249,24 +254,24 @@ namespace trees {
 			noded->parent = this->root;
 		}
 
-		Arb_Binary_Node<T>* arbnode_search(T data) {
+		Arb_Node<T>* arbnode_search(T data) {
 			if (root == nullptr) {
 				return nullptr;
 			}
 			
-			Arb_Binary_Node<T>* noded = new Arb_Binary_Node<T>(data);
+			Arb_Node<T>* noded = new Arb_Node<T>(data);
 
 			if (check_equality(root, noded)) {
 				return root;
 			}
 
-			linkedl::Queue<Arb_Binary_Node<T>*> queue = linkedl::Queue<Arb_Binary_Node<T>*>();
+			linkedl::Queue<Arb_Node<T>*> queue = linkedl::Queue<Arb_Node<T>*>();
 			queue.add_elem(this->root);
 
 			while (queue.head != nullptr) {
-				Arb_Binary_Node<T>* temp = queue.front();
+				Arb_Node<T>* temp = queue.front();
 				queue.pop_front();
-				linkedl::Node<Arb_Binary_Node<T>*>* check_node = temp->children.head;
+				linkedl::Node<Arb_Node<T>*>* check_node = temp->children.head;
 				while (check_node != nullptr) {
 					if (check_equality(check_node->data, noded)) {
 						return check_node->data;
@@ -284,7 +289,7 @@ namespace trees {
 
 		virtual void arbnode_delete(T data) {
 
-			Arb_Binary_Node<T>* temp = arbnode_search(data);
+			Arb_Node<T>* temp = arbnode_search(data);
 			if (temp == nullptr)
 				return;
 			if (check_equality(this->root, temp)) {
@@ -313,7 +318,7 @@ namespace trees {
 
 				}
 				else {
-					linkedl::Node<Arb_Binary_Node<T>*>* temp1 = temp->parent->children.head;
+					linkedl::Node<Arb_Node<T>*>* temp1 = temp->parent->children.head;
 					while (temp1 != nullptr) {
 						if (temp1->data->data.id == temp->data.id) {
 							temp1->prev->next = temp->children.head;
@@ -324,7 +329,7 @@ namespace trees {
 						}
 					}
 				}
-				linkedl::Node<Arb_Binary_Node<T>*>* tempp = temp->children.head;
+				linkedl::Node<Arb_Node<T>*>* tempp = temp->children.head;
 				while (tempp != temp->children.tail)
 					tempp->data->parent = temp->parent;
 				tempp->data->parent = temp->parent;
@@ -333,7 +338,7 @@ namespace trees {
 			delete temp;
 		}
 
-		bool check_equality(Arb_Binary_Node<T>* node_1, Arb_Binary_Node<T>* node_2) {
+		bool check_equality(Arb_Node<T>* node_1, Arb_Node<T>* node_2) {
 			if (node_1->data.id == node_2->data.id)
 				return true;
 			return false;
@@ -359,7 +364,8 @@ namespace trees {
 			this->index_end = 0;
 		}
 		~Arb_Binary_Node_Vector() {
-			children.clear();
+			if(this->children.size()!=0)
+				this->children.clear();
 		}
 	};
 
@@ -369,6 +375,10 @@ namespace trees {
 	public:
 		Arb_Binary_Node_Vector<T>* root;
 
+		~GeneralTreeVector() {
+			delete root;
+		}
+
 		void arb_node_vec_insert(T data) {
 			Arb_Binary_Node_Vector<T>* node_to_add = new Arb_Binary_Node_Vector<T>(data);
 			if (this->root == nullptr) {
@@ -376,6 +386,7 @@ namespace trees {
 				return;
 			}
 			this->root->children.push_back(node_to_add);
+			node_to_add->parent = this->root;
 			this->root->index_end++;
 
 		}
@@ -419,14 +430,17 @@ namespace trees {
 			Arb_Binary_Node_Vector<T>* temp = arbnode_search(data);
 			if (check_equality(this->root, temp)) {
 				delete this->root;
+				this->root = nullptr;
 				return;
 			}
 
 			Arb_Binary_Node_Vector<T>* temp2 = temp->parent;
 			int i = 0;
 			while (i < temp2->children.size()) {
-				if (check_equality(temp2->children[i], temp))
-					temp2->children.erase(temp2->children.begin()+i);
+				if (check_equality(temp2->children[i], temp)) {
+					temp2->children.erase(temp2->children.begin() + i);
+					break;
+				}
 			}
 			
 			delete temp;
