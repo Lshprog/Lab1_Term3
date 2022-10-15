@@ -21,6 +21,9 @@
     <ClCompile Include="BksCh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LinkedListImpl.h">
@@ -35,7 +38,7 @@
     <ClInclude Include="VectorListImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MapStruct.h">
+    <ClInclude Include="PairStruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Trees_impl.h">

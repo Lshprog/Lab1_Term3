@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="BksCh.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LinkedListImpl.h" />
@@ -148,7 +149,7 @@
     <ClInclude Include="ArrayListImpl.h" />
     <ClInclude Include="Trees_impl.h" />
     <ClInclude Include="VectorListImpl.h" />
-    <ClInclude Include="MapStruct.h" />
+    <ClInclude Include="PairStruct.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

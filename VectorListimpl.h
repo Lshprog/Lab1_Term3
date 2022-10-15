@@ -28,14 +28,14 @@ namespace vectorl {
 		int search_elem_index(T data) {
 			int i = 0;
 			while (i < index_end) {
-				if (array[i] == data) {
+				if (array[i].id == data.id) {
 					return i;
 				}
 				else
 					i++;
 			}
 			std::cout << "No such elem" << std::endl;
-			return NULL;
+			return -1;
 		}
 
 		void swap_elements_zeroes() {
@@ -115,7 +115,7 @@ namespace vectorl {
 					arr[j--] = temp;
 				}
 			}
-			delete temp;
+			
 			return pivotIndex;
 		}
 
@@ -141,8 +141,7 @@ namespace vectorl {
 		{
 			int const subArrayOne = mid - left + 1;
 			int const subArrayTwo = right - mid;
-			T* leftArray = new T[subArrayOne];
-			T* rightArray = new T[subArrayTwo];
+			
 			// Create temp arrays
 			T* leftArray = new T[subArrayOne];
 			T* rightArray = new T[subArrayTwo];
@@ -209,9 +208,12 @@ namespace vectorl {
 			return this->array[this->index_end - 1];
 		}
 		void popBack() {
-			if (this->array[0] != NULL) {
+			if (this->index_end > 0) {
 				this->array.pop_back();
 				this->index_end--;
+			}
+			else {
+				std::cout << "empty!!" << std::endl;
 			}
 		}
 	};
@@ -223,27 +225,21 @@ namespace vectorl {
 		}
 
 		void pop_front() {
-			if (this->array[0] != NULL) {
+			if (this->index_end > 0) {
 				this->array.erase(this->array.begin());
+				this->index_end--;
 			}
 		}
 	};
 
 
-	template <typename T>class DeQueue :Stack<T>, Queue<T> {
+	template <typename T>class DeQue :public Stack<T>,public Queue<T> {
 	public:
 		void add_front(T data) {
-			
-			int i = this->index_end;
-			while (i > 0) {
-				this->array[i] = this->array[i - 1];
-				i--;
-			}
+
+			this->array.insert(this->array.begin(),data);
 			this->index_end++;
 
-			this->array[0] = data;
-
-			
 		}
 	};
 }

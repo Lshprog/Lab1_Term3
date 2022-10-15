@@ -19,9 +19,7 @@ namespace arrayl{
 			this->array = new T[arr_length];
 		}
 
-		~ArrayList() {//Problem to fix
-
-			delete[] array;
+		~ArrayList() {
 			
 		}
 
@@ -39,36 +37,17 @@ namespace arrayl{
 		int search_elem_index(T data) {
 			int i = 0;
 			while (i<index_end) {
-				if (array[i] == data) {
+				if (check_equality(array[i],data)) {
 					return i;
 				}
 				else
 					i++;
 			}
 			std::cout << "No such elem" << std::endl;
-			return NULL;
+			return -1;
 		}
 
-		void swap_elements_zeroes() {
-			int i = 0;
-			int amount_of_gaps = 0;
-			T temp = new T();
-
-			while (i < index_end) {
-				if (array[i] == NULL) {
-					amount_of_gaps++;
-					i++;
-				}
-				else if (amount_of_gaps > 0) {
-					array[i-amount_of_gaps] = array[i];
-					i++;
-				}
-				else
-					i++;
-			}
-			index_end = index_end - amount_of_gaps;
-		}
-
+		
 
 		void insertionSort()
 		{
@@ -118,41 +97,7 @@ namespace arrayl{
 			}
 			swap(arr, i + 1, high);
 			return (i + 1);
-			//T pivot = arr[start];
-
-			//int count = 0;
-			//for (int i = start + 1; i <= end; i++) {
-			//	if (compare_books(pivot, arr[i]))
-			//		count++;
-			//}
-
-			//// Giving pivot element its correct position
-			//int pivotIndex = start + count;
-			//T temp = arr[pivotIndex];
-			//arr[pivotIndex] = arr[start];
-			//arr[start] = temp;
-
-			//// Sorting left and right parts of the pivot element
-			//int i = start, j = end;
-
-			//while (i < pivotIndex && j > pivotIndex) {
-
-			//	while (compare_books(pivot, arr[i])) {
-			//		i++;
-			//	}
-
-			//	while (compare_books(arr[j],pivot)) {
-			//		j--;
-			//	}
-
-			//	if (i < pivotIndex && j > pivotIndex) {
-			//		temp = arr[i++];
-			//		arr[i++] = arr[j--];
-			//		arr[j--] = temp;
-			//	}
-			//}
-			//
-			//return pivotIndex;
+			
 		}
 
 		void quickSort(T* arr, int start, int end)
@@ -245,11 +190,11 @@ namespace arrayl{
 			return this->array[this->index_end - 1];
 		}
 		void pop_back() {
-			if (this->array[0] != NULL) {
-				if (this->index_end > 0) {
-					this->array[this->index_end - 1] = NULL;
-					this->index_end--;
-				}
+			if (this->index_end > 0) {
+				this->index_end--;
+			}
+			else {
+				std::cout << "empty!!" << std::endl;
 			}
 		}
 	};
@@ -261,23 +206,22 @@ namespace arrayl{
 		}
 
 		void pop_front() {
-			if (this->array[0] != NULL) {
+			if (this->index_end > 0) {
 				for (int i = 0; i < this->index_end; i++) {
 					this->array[i] = this->array[i + 1];
 				}
-				this->array[this->index_end - 1] = NULL;
 				this->index_end--;
+			}
+			else {
+				std::cout << "empty!!" << std::endl;
 			}
 		}
 	};
 	
 
-	template <typename T>class DeQueue :Stack<T>,Queue<T> {
+	template <typename T>class DeQue :public Stack<T>,public Queue<T> {
 	public:
 		void add_front(T data) {
-			if (this->index_end >= arr_length)
-				this->swap_elements_zeroes();
-
 			if (this->index_end >= arr_length)
 				std::cout << "DeQueue is full!!!" << std::endl;
 			else {

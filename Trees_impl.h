@@ -19,7 +19,7 @@ namespace trees {
 		Binary_Node* parent;
 
 		Binary_Node() {
-			this->data = NULL;
+
 			left = nullptr;
 			right = nullptr;
 			parent = nullptr;
@@ -91,34 +91,38 @@ namespace trees {
 				if (temp != nullptr) {
 					if (temp->data.id == data.id)
 						return temp;
+					else {
+						if (temp->left != nullptr) {
+							if (temp->left->data.id == data.id)
+								return temp->left;
+							else
+								queue.add_elem(temp->left);
+						}
+
+						if (temp->right != nullptr) {
+							if (temp->right->data.id == data.id)
+								return temp->right;
+							else
+								queue.add_elem(temp->right);
+						}
+					}
 				}
-
-				if (temp->left != nullptr) {
-					if (temp->left->data.id == data.id)
-						return temp->left;
-					else
-						queue.add_elem(temp->left);
-				}
-
-				if (temp->right != nullptr) {
-					if (temp->right->data.id == data.id)
-						return temp->right;
-					else
-						queue.add_elem(temp->right);
-				}
-
-				if (temp == nullptr)
-					std::cout << "No such elem" << std::endl;
-
 			}
-
+			std::cout << "No such elem" << std::endl;
+			return nullptr;
 		}
 
 		void bnode_delete(T data) {
 			Binary_Node<T>* temp;
 			Binary_Node<T>* temp2;
 			temp = bnode_search(data);
-
+			if (temp == nullptr)
+				return;
+			if (check_equality(this->root, temp)) {
+				delete this->root;
+				this->root = nullptr;
+				return;
+			}
 			if (temp->data.id == this->root->data.id) {
 				if (temp->right != nullptr) {
 					this->root = temp->right;
@@ -212,7 +216,6 @@ namespace trees {
 
 		Arb_Node() {
 			this->parent = nullptr;
-			this->data = NULL;
 		}
 		Arb_Node(T data) {
 			this->parent = nullptr;
@@ -356,7 +359,6 @@ namespace trees {
 		std::vector<Arb_Node_Vector<T>*> children;
 
 		Arb_Node_Vector() {
-			this->data = NULL;
 			this->index_end = 0;
 		}
 		Arb_Node_Vector(T data) {
@@ -404,7 +406,7 @@ namespace trees {
 			vectorl::Queue<Arb_Node_Vector<T>*> queue = vectorl::Queue<Arb_Node_Vector<T>*>();
 			queue.add_elem(this->root);
 
-			while (queue.array[0] != NULL) {
+			while (queue.index_end>0) {
 				Arb_Node_Vector<T>* temp = queue.front_elem();
 				queue.pop_front();
 				if (temp->children.size() != 0) {
@@ -428,6 +430,11 @@ namespace trees {
 		virtual void arbnode_delete(T data) {
 
 			Arb_Node_Vector<T>* temp = arbnode_search(data);
+
+			if (temp == nullptr) {
+				return;
+			}
+
 			if (check_equality(this->root, temp)) {
 				delete this->root;
 				this->root = nullptr;
@@ -441,6 +448,7 @@ namespace trees {
 					temp2->children.erase(temp2->children.begin() + i);
 					break;
 				}
+				i++;
 			}
 			
 			delete temp;

@@ -2,6 +2,8 @@
 #ifndef BKSCH_H
 #define BKSCH_H
 #include "LinkedListImpl.h" 
+#include "ArrayListimpl.h"
+#include "VectorListimpl.h"
 #include "Trees_impl.h"
 #include <cmath>
 #include <stdlib.h>
@@ -36,7 +38,7 @@ namespace books {
 			this->pub_date[10]=NULL;
 			this->description[200] = NULL;
 			this->num_of_pages = 0;
-			this->id = 0;
+			this->id = -1;
 			this->pub_date_key = 0;
 		}
 		
@@ -53,14 +55,14 @@ namespace books {
 		Character() {
 			
 		}
-
-		~Character() {
-			delete list_of_books;
-			delete list_of_names;
-		}
 	};
 }
 bool compare_books(books::Book node_1, books::Book node_2);
 bool compare_books_no_equality(books::Book node_1, books::Book node_2);
-
+bool check_equality(books::Book node_1, books::Book node_2);
+linkedl::List<linkedl::List<books::Book>*> start_prog_linkedl(linkedl::List<books::Character<linkedl::List<std::string>, linkedl::List<Pair<books::Book, int>>>> listofch);
+arrayl::ArrayList<arrayl::ArrayList<books::Book>> start_prog_arrayl(arrayl::ArrayList<books::Character<arrayl::ArrayList<std::string>,
+	arrayl::ArrayList<Pair<books::Book, int>>>> listofch);
+vectorl::VectorList<vectorl::VectorList<books::Book>> start_prog_vectorl(vectorl::VectorList<books::Character<vectorl::VectorList<std::string>,
+	vectorl::VectorList<Pair<books::Book, int>>>> listofch);
 #endif

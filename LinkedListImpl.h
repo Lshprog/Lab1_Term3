@@ -3,7 +3,7 @@
 #define LINKEDLISTIMPL_H
 #include<iostream>
 #include <String>
-#include"MapStruct.h"
+#include"PairStruct.h"
 
 
 
@@ -23,7 +23,23 @@ bool compare_books_no_equality(T node_1, T node_2)
 	else
 		return false;
 }
+template <typename T>
+bool check_equality(T* node_1, T* node_2)
+{
+	if (node_1->data.id == node_2->data.id)
+		return true;
+	else
+		return false;
+}
 
+template <typename T>
+bool check_equality(T node_1, T node_2)
+{
+	if (node_1.id == node_2.id)
+		return true;
+	else
+		return false;
+}
 
 
 namespace linkedl {
@@ -59,9 +75,12 @@ namespace linkedl {
 			Node<T>* iter = this->head;
 			while (iter != nullptr)
 			{
-				
+				if (iter->next == nullptr) {
+					iter->~Node();
+					break;
+				}
 				Node<T>* temp = iter->next;
-				iter->~Node();
+				iter->~Node();	
 				iter = temp;
 			}
 			this->head = nullptr;
@@ -82,36 +101,45 @@ namespace linkedl {
 		}
 
 		void delete_elem(T data) {
-			Node<T>* temp = this->head;
-			while (temp != nullptr) {
-				if (temp->data == data) {
-					if (temp == tail) {
-						(temp->prev)->next = nullptr;
-						this->tail = temp->prev;
-						delete temp;
-						return;
-					}
-					else if (temp == head) {
-						(temp->next)->prev = nullptr;
-						this->head = temp->next;
-						delete temp;
-						return;
-					}
-					else {
-						(temp->prev)->next = temp->next;
-						(temp->next)->prev = temp->prev;
-						return;
-					}
+			
+			Node<T>* temp = search_elem(data);
+
+			if (temp == nullptr) {
+				std::cout << "No such elem " << std::endl;
+				return;
+			}
+			else if (temp==tail,temp==head) {
+				delete temp;
+				head = nullptr;
+				tail = nullptr;
+			}
+			else {
+				if (temp == tail) {
+					(temp->prev)->next = nullptr;
+					this->tail = temp->prev;
+					delete temp;
+					return;
 				}
-				temp = temp->next;
+				else if (temp == head) {
+					(temp->next)->prev = nullptr;
+					this->head = temp->next;
+					delete temp;
+					return;
+				}
+				else {
+					(temp->prev)->next = temp->next;
+					(temp->next)->prev = temp->prev;
+					return;
+				}
 			}
 		}
 
 		Node<T>* search_elem(T data) {
 			Node<T>* temp = this->head;
 			while (temp != nullptr) {
-				if (temp->data.id == data.id)
+				if (check_equality(temp->data,data))
 					return temp;
+				temp = temp->next;
 			}
 			
 			return nullptr;
@@ -322,6 +350,7 @@ namespace linkedl {
 				temp = temp->next;
 			}
 			// return the head of the sorted list
+			this->tail = temp;
 			return merged->next;
 		}
 
@@ -337,6 +366,10 @@ namespace linkedl {
 			return slow;
 		}
 		Node<T>* start_merge_sort(Node<T>* head) {
+			if (head == nullptr) {
+				std::cout << "empty list" << std::endl;
+				return nullptr;
+			}
 			if (head->next == nullptr)
 				return head;
 
@@ -356,16 +389,19 @@ namespace linkedl {
 
 
 
-	template <typename T> class Stack :virtual List<T> {
+	template <typename T> class Stack :virtual public List<T> {
 	public:
 
 		T end() {
-			if (this->tail->data != nullptr) {
+
+			T temp = T();
+
+			if (this->tail != nullptr) {
 				return this->tail->data;
 			}
 			else {
 				std::cout << "stack is empty!" << std::endl;
-				return nullptr;
+				return temp;
 			}
 		}
 		void pop_end() {
@@ -396,12 +432,15 @@ namespace linkedl {
 	public:
 
 		T front() {
-			if (this->head->data != nullptr) {
+
+			T temp = T();
+
+			if (this->head != nullptr) {
 				return this->head->data;
 			}
 			else {
 				std::cout << "queue is empty!" << std::endl;
-				return nullptr;
+				return temp;
 			}
 		}
 
@@ -426,7 +465,7 @@ namespace linkedl {
 
 	};
 
-	template <typename T> class DeQueue :virtual Stack<T>,virtual Queue<T> {
+	template <typename T> class DeQue :public Stack<T>, public Queue<T> {
 	public:
 		
 	};
